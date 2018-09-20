@@ -16,8 +16,8 @@ class VAE(nn.Module):
 		self.c3 = nn.Conv2d(64,128,4, stride = 2)
 		self.c4 = nn.Conv2d(128,256,4, stride = 2)
 
-		self.mean = nn.Linear(512,32) 
-		self.logvar = nn.Linear(512,32)
+		self.mean = nn.Linear(1024,32) 
+		self.logvar = nn.Linear(1024,32)
 
 		self.z_to_vec = nn.Linear(32, 1024)
 
@@ -34,8 +34,7 @@ class VAE(nn.Module):
 		for l in conv_layers: 
 			x = F.relu(l(x))
 
-		x = x.reshape(batch, -1)
-
+		x = x.reshape(batch_size, -1)
 
 		means = self.mean(x)
 		logvar = self.logvar(x)
@@ -55,7 +54,7 @@ class VAE(nn.Module):
 		z = self.reparametrize(means, logvars)
 		recon = self.decode(z)
 
-		return recon, z, means, logvar
+		return recon, z, means, logvars
 		
 	def reparametrize(self, mean, logvar): 
 
@@ -70,22 +69,22 @@ class VAE(nn.Module):
 
 	def decode(self, x): 
 
-		batch = x.shape[0]
+		batch_size = x.shape[0]
 
 		x = F.relu(self.z_to_vec(x))
 
-		deconv_layers = [self.d1, self.d2, self.d3, self.d4]
-		x = x.reshape(batch, -1,1,1)
+		deconv_layers = [self.d1, self.d2, self.d3]
+		x = x.reshape(batch_size, -1,1,1)
 		for l in deconv_layers: 
 			x = F.relu(l(x))
 
-		return x
+		return torch.sigmoid(self.d4(x))
 
 	def compute_loss(self, batch): 
 
 		recon, z, means, logvars = self(batch)
 
-		recon_loss = F.binary_cross_entropy(recon, batch, size_average = False) 
+		recon_loss = F.binary_cross_entropy(recon, batch, reduction = 'sum') 
 		kl_d_loss = -0.5*torch.sum(1 + logvars - means.pow(2) - logvars.exp())
 
 		return recon_loss, kl_d_loss
