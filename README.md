@@ -7,9 +7,16 @@ This repo holds an implementation of the VAE model detailed in [WorldModels](htt
 You can see the results for yourself using the runs folder. Just call Tensorboard to do so. 
 However, here are some images: 
 
+Sampling:
+
 ![Sampling 2500](imgs/recon25.png)
 
 ![Sampling 4900](imgs/recon_49.png)
+
+
+Reconstruction: 
+
+![Recon 5000](imgs/recon5.png)
 
 ## Insights 
 
