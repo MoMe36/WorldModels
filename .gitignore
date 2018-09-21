@@ -1,4 +1,6 @@
-dataset/*
-trained_models/*
-runs/*
-runs_ae/*
+dataset/
+trained_models/
+runs/
+runs_ae/
+__pycache__/
+
