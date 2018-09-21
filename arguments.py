@@ -8,7 +8,7 @@ def get_args():
 
 	parser = ArgumentParser()
 
-	parser.add_argument('--nb_samples', type = int, default = 10)
+	parser.add_argument('--nb_samples', type = int, default = 16)
 	parser.add_argument('--lr', type = float, default = 3e-4)
 	parser.add_argument('--epochs', type = int, default = 5000)
 	parser.add_argument('--num_batchs', type = int, default = 16)
@@ -24,5 +24,5 @@ def get_args():
 	args = parser.parse_args()
 	args.use_cuda = True if args.use_cuda in ['y', 'Y', 'o', 'O'] else False 
 	args.load_model = True if args.load_model in ['y', 'Y', 'o', 'O'] else False 
-	
+
 	return args

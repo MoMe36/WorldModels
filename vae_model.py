@@ -82,13 +82,15 @@ class VAE(nn.Module):
 
 	def compute_loss(self, batch): 
 
+		batch_size = batch.shape[0]
+
 		recon, z, means, logvars = self(batch)
 
 		# recon_loss = F.binary_cross_entropy(recon, batch, reduction = 'sum') 
 		recon_loss = F.mse_loss(recon, batch, reduction = 'sum')
 		kl_d_loss = -0.5*torch.sum(1 + logvars - means.pow(2) - logvars.exp())
 
-		return recon_loss, kl_d_loss
+		return recon_loss, kl_d_loss/float(batch_size)
 
 
 class AE(nn.Module): 
