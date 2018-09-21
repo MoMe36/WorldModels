@@ -17,9 +17,12 @@ def get_args():
 	parser.add_argument('--im_interval', type = int, default = 250)
 	parser.add_argument('--run_id', default = "v1")
 	parser.add_argument('--use_cuda', default = "n")
+	parser.add_argument('--load_model', default = "n")
 
 
 
 	args = parser.parse_args()
 	args.use_cuda = True if args.use_cuda in ['y', 'Y', 'o', 'O'] else False 
+	args.load_model = True if args.load_model in ['y', 'Y', 'o', 'O'] else False 
+	
 	return args

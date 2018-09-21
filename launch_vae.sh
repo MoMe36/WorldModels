@@ -1,4 +1,5 @@
 #!/bin/bash
 
 
-python train_vae.py --run_id "test" --use_cuda y --im_interval 20
+# python train_vae.py --run_id "test" --use_cuda y --im_interval 200
+python train_ae.py --run_id "AE_test" --use_cuda y --im_interval 200 --load_model y

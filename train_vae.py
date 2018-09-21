@@ -114,6 +114,11 @@ def run_sample(model, loader, args):
 
 	return torch.cat([x,x,x],1), torch.cat([r,r,r],1), torch.cat([z,z,z],1)
 
+def write_scalars(dico, writer, epoch): 
+
+	for k in dico.keys(): 
+		writer.add_scalar(k, dico[k], epoch)
+
 
 def small_init(model): 
 
@@ -153,7 +158,9 @@ def train(model, loader, args, writer):
 		epoch_recon_loss /= float(nb_batch)
 		epoch_kl_d_loss /= float(nb_batch)
 
-		writer.add_scalars('Losses', {'Reconstruction':epoch_recon_loss , 'KL_Div':epoch_kl_d_loss , 'Full':epoch_recon_loss + epoch_kl_d_loss}, epoch)
+
+		dico_loss = {'Losses/Reconstruction':epoch_recon_loss , 'Losses/KL_Div':epoch_kl_d_loss , 'Losses/Full':epoch_recon_loss + epoch_kl_d_loss}
+		write_scalars(dico_loss, writer, epoch)
 
 		print_logs(epoch, epoch_recon_loss, epoch_kl_d_loss)
 
