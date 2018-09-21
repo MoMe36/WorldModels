@@ -4,7 +4,8 @@
 This repo holds an implementation of the VAE model detailed in [WorldModels](https://github.com/worldmodels.gituhub.io)
 
 ## Results
-
+You can see the results for yourself using the runs folder. Just call Tensorboard to do so. 
+However, here are some images: 
 
 
 ## Insights 
