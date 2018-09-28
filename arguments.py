@@ -1,6 +1,9 @@
-
+import torch 
+import numpy as np 
+import pickle
 from argparse import ArgumentParser 
-
+import os 
+import random
 
 
 def get_args():
@@ -26,3 +29,32 @@ def get_args():
 	args.load_model = True if args.load_model in ['y', 'Y', 'o', 'O'] else False 
 
 	return args
+
+
+def load(name): 
+
+	x = pickle.load(open(name, 'rb'))
+	return x 
+
+
+class Loader: 
+
+	def __init__(self, path, max_im): 
+
+		self.path = path 
+		self.max_im = max_im 
+
+	def sample(self, batch_size = 64): 
+
+		batch = np.zeros((batch_size, 1, 64,64))
+		inds = random.sample(list(np.arange(self.max_im)), batch_size)
+		for i, ind in enumerate(inds):
+
+			batch[i,:,:,:] = load(os.path.join(self.path, str(ind)))
+
+		return torch.tensor(batch).float()
+
+	def sample_cuda(self, batch_size = 64): 
+
+		batch = self.sample(batch_size)
+		return batch.cuda()

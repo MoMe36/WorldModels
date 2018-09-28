@@ -11,6 +11,8 @@ However, here are some images:
 
 ![Sampling 4900](imgs/recon_49.png)
 
+![Reconstruction](imgs/recon5.png)
+
 ## Insights 
 
 While implementing, I came across some facts that I believe are worth sharing: 
